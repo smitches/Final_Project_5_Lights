@@ -5,6 +5,9 @@ class LightBulb{
     this.index=index;on = false;
   }
   void On(){
+    for (LightBulb b : Lights){
+      b.Off();
+    }
     on=true;
   }
   void Off(){

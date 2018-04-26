@@ -4,6 +4,9 @@ LightBulb[] Lights = new LightBulb[10];
 LightBulb Red,Green,Blue,White,Yellow, PRed,PGreen,PBlue,PWhite,PYellow;
 ArrayList<LightBulb> simonSaid=new ArrayList<LightBulb>();
 
+String[] Screens = new String[4];
+String thisScreen;int i=0;
+
 
 void setup(){ 
   size(700,500);
@@ -33,16 +36,21 @@ void setup(){
     //GPIO.pinMode(b.index,GPIO.OUTPUT);
   }
   
+  
+  thisScreen=Screens[0]="MainMenuScreen";
+  Screens[1]="PlayScreen";
+  Screens[2]="GetNameScreen";
+  Screens[3]="DisplayHighScoreScreen";
 }
 
 void draw(){
-  stroke(0);
-  noFill();
-  rect(0,0,500,500);
   
-  for(LightBulb b : Lights){
-    b.Display();
-  }
+  if (thisScreen==Screens[0]){displayMainMenu();}
+  else if(thisScreen==Screens[1]){displayPlayScreen();}
+  else if(thisScreen==Screens[2]){displayGetNameScreen();}  
+  else if(thisScreen==Screens[3]){displayHighScoreScreen();}
+  
+  for(LightBulb b : Lights){b.Display();}
   
   //ONLY FOR PC
   for (int i=0; i<Lights.length;i++){
@@ -51,17 +59,42 @@ void draw(){
     ellipse(600,i*30+20,20,20);
   }
   //END ONLY FOR PC
-  Yellow.On();
+  
 }
 
+void displayMainMenu(){
+  noStroke();
+  fill(0,255,0);
+  rect(0,0,500,500);
+}
+void displayPlayScreen(){
+  noStroke();
+  fill(0,255,255);
+  rect(0,0,500,500);
+}
+void displayGetNameScreen(){
+  noStroke();
+  fill(255,255,0);
+  rect(0,0,500,500);
+}
+void displayHighScoreScreen(){
+  noStroke();
+  fill(255,0,255);
+  rect(0,0,500,500);
+}
+
+void mouseClicked(){
+  thisScreen=Screens[i%Screens.length];
+  
+  Lights[i%Lights.length].On();
+  i++;
+}
+
+void keyPressed(){
+  //Lights[int(random(0,Lights.length))].On();
+}
 void allOff(){
   for (LightBulb b : Lights){
     b.Off();
-  }
-}
-
-void allOn(){
-  for (LightBulb b : Lights){
-    b.On();
   }
 }
