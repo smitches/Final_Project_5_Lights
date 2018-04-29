@@ -1,5 +1,5 @@
 //import processing.io.*;
-
+Timer t = new Timer();
 LightBulb[] Lights = new LightBulb[5];
 LightBulb Red,Green,Blue,White,Yellow;
 ArrayList<LightBulb> simonSaid=new ArrayList<LightBulb>();
@@ -11,7 +11,6 @@ String thisScreen;int i=0;
 
 void setup(){ 
   size(700,500);
-  
   int i = 0;
   Red=new LightBulb(4,13);Lights[i]=Red;
   i++;
@@ -77,14 +76,17 @@ void displayHighScoreScreen(){
 void simonAdds(){
   int i = int(random(5));
   simonSaid.add(Lights[i]);
-  
 }
-void simonPlays(LightBulb L){
+void simonDisplay(LightBulb L){
   playerKey = false;
   L.On();
-  L.Display();
-  L.Off();
 }
+void simonSays(){
+  
+  
+  
+}
+
   
 
 void mouseClicked(){
