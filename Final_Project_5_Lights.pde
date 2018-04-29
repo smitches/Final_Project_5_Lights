@@ -95,7 +95,7 @@ void simonDisplay(LightBulb L){
 }
 void simonSays(){
   t.setPeriod(500);
-  t.now(); //records the starttime 
+  t.now(); //records the startTime 
   if (t.next()){
     simonDisplay(simonSaid.get(idx));
     idx += 1; 
