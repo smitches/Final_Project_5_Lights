@@ -3,13 +3,15 @@ Timer t = new Timer();
 LightBulb[] Lights = new LightBulb[5];
 LightBulb Red,Green,Blue,White,Yellow;
 ArrayList<LightBulb> simonSaid=new ArrayList<LightBulb>();
-Boolean playerKey;
+ArrayList<LightBulb> playerSaid=new ArrayList<LightBulb>();
+Boolean playerKey, simonSaying;
 String[] Screens = new String[4];
 String thisScreen;int i=0;
-
+int idx = 0;
 
 
 void setup(){ 
+  simonSaying = true;
   size(700,500);
   int i = 0;
   Red=new LightBulb(4,13);Lights[i]=Red;
@@ -36,10 +38,15 @@ void setup(){
 
 void draw(){
   
-  if (thisScreen==Screens[0]){displayMainMenu();}
-  else if(thisScreen==Screens[1]){displayPlayScreen();}
-  else if(thisScreen==Screens[2]){displayGetNameScreen();}  
-  else if(thisScreen==Screens[3]){displayHighScoreScreen();}
+  if (thisScreen==Screens[0])
+    {displayMainMenu();}
+  else if(thisScreen==Screens[1])
+    {displayPlayScreen();}
+  else if(thisScreen==Screens[2])
+    {displayGetNameScreen();}  
+  else if(thisScreen==Screens[3])
+    {displayHighScoreScreen();}
+  
   
   for(LightBulb b : Lights){b.Display();}
   
@@ -62,6 +69,11 @@ void displayPlayScreen(){
   noStroke();
   fill(0,255,255);
   rect(0,0,500,500);
+  if (simonSaying) {
+    simonSays();
+  }else {
+    playerSays();
+  }
 }
 void displayGetNameScreen(){
   noStroke();
@@ -82,9 +94,19 @@ void simonDisplay(LightBulb L){
   L.On();
 }
 void simonSays(){
+  t.setPeriod(500);
+  t.now(); //records the starttime 
+  if (t.next()){
+    simonDisplay(simonSaid.get(idx));
+    idx += 1; 
+  }if (idx == simonSaid.size()){
+    idx = 0;
+    simonAdds();
+    simonSaying = false;
+  }
   
-  
-  
+}
+void playerSays(){
 }
 
   
