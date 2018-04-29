@@ -1,8 +1,10 @@
 class LightBulb{
-  int index;
+  int index, idx2;
   boolean on;
-  LightBulb(int index){
-    this.index=index;on = false;
+  LightBulb(int index, int idx2){
+    this.index=index;
+    this.idx2=idx2;
+    on = false;
   }
   void On(){
     for (LightBulb b : Lights){

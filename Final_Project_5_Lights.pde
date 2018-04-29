@@ -1,36 +1,28 @@
 //import processing.io.*;
 
-LightBulb[] Lights = new LightBulb[10];
-LightBulb Red,Green,Blue,White,Yellow, PRed,PGreen,PBlue,PWhite,PYellow;
+LightBulb[] Lights = new LightBulb[5];
+LightBulb Red,Green,Blue,White,Yellow;
 ArrayList<LightBulb> simonSaid=new ArrayList<LightBulb>();
-
+Boolean playerKey;
 String[] Screens = new String[4];
 String thisScreen;int i=0;
+
 
 
 void setup(){ 
   size(700,500);
   
   int i = 0;
-  Red=new LightBulb(4);Lights[i]=Red;
+  Red=new LightBulb(4,13);Lights[i]=Red;
   i++;
-  Green=new LightBulb(17);Lights[i]=Green;
+  Green=new LightBulb(17,26);Lights[i]=Green;
   i++;
-  Blue=new LightBulb(22);Lights[i]=Blue;
+  Blue=new LightBulb(22,18);Lights[i]=Blue;
   i++;
-  White=new LightBulb(5);Lights[i]=White;
+  White=new LightBulb(5,23);Lights[i]=White;
   i++;
-  Yellow=new LightBulb(6);Lights[i]=Yellow;
+  Yellow=new LightBulb(6,25);Lights[i]=Yellow;
   i++;
-  PRed=new LightBulb(13);Lights[i]=PRed;
-  i++;
-  PGreen=new LightBulb(26);Lights[i]=PGreen;
-  i++;
-  PBlue=new LightBulb(18);Lights[i]=PBlue;
-  i++;
-  PWhite=new LightBulb(23);Lights[i]=PWhite;
-  i++;
-  PYellow=new LightBulb(25);Lights[i]=PYellow;
   
   for (LightBulb b : Lights){
     //GPIO.pinMode(b.index,GPIO.OUTPUT);
@@ -82,6 +74,18 @@ void displayHighScoreScreen(){
   fill(255,0,255);
   rect(0,0,500,500);
 }
+void simonAdds(){
+  int i = int(random(5));
+  simonSaid.add(Lights[i]);
+  
+}
+void simonPlays(LightBulb L){
+  playerKey = false;
+  L.On();
+  L.Display();
+  L.Off();
+}
+  
 
 void mouseClicked(){
   thisScreen=Screens[i%Screens.length];
