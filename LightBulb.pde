@@ -16,7 +16,7 @@ class LightBulb{
     on=false;
   }
   void Display(){
-    //if (on){GPIO.digitalWrite(index,GPIO.HIGH);}
-    //else{GPIO.digitalWrite(index,GPIO.LOW);}
+    //if (on){GPIO.digitalWrite(index,GPIO.HIGH);GPIO.digitalWrite(idx2,GPIO.HIGH);}
+    //else{GPIO.digitalWrite(index,GPIO.LOW);GPIO.digitalWrite(idx2,GPIO.LOW);}
   }
 }
