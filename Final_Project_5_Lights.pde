@@ -1,33 +1,38 @@
 //import processing.io.*;
+import processing.sound.*;
 Timer t = new Timer();
 LightBulb[] Lights = new LightBulb[5];
 LightBulb Red,Green,Blue,White,Yellow;
 ArrayList<LightBulb> simonSaid=new ArrayList<LightBulb>();
 ArrayList<LightBulb> playerSaid=new ArrayList<LightBulb>();
 Boolean simonSaying;
-String[] Screens = new String[4];
+String[] Screens = new String[5];
 String thisScreen; int i=0;
 int idx = 0;
 Boolean firstCall=true;
 
 
-//TODO: IMPLEMENT HIGH SCORE (10*ROUNDS CORRECT)
+//TODO: IMPLEMENT HIGH SCORE (10*ROUNDS CORRECT) AND STORE TO CSV
 //TODO: ALL GUI SCREENS. LOOK AT THE FUNCTIONS BELOW DRAW
-//TODO: ALL SOUNDS ASSOCIATED WITH THE COLORS. IMPLEMENT IN LIGHT BULB CLASS
 
 void setup(){ 
   simonSaying = true;
   size(700,500);
   int i = 0;
-  Red=new LightBulb(4,13);Lights[i]=Red;
+  SoundFile s = new SoundFile(this,"1.WAV");
+  Red=new LightBulb(4,13,s);Lights[i]=Red;
   i++;
-  Green=new LightBulb(17,26);Lights[i]=Green;
+  s = new SoundFile(this,"2.WAV");
+  Green=new LightBulb(17,26,s);Lights[i]=Green;
   i++;
-  Blue=new LightBulb(22,18);Lights[i]=Blue;
+  s = new SoundFile(this,"3.WAV");
+  Blue=new LightBulb(22,18,s);Lights[i]=Blue;
   i++;
-  White=new LightBulb(5,23);Lights[i]=White;
+  s = new SoundFile(this,"4.WAV");
+  White=new LightBulb(5,23,s);Lights[i]=White;
   i++;
-  Yellow=new LightBulb(6,25);Lights[i]=Yellow;
+  s = new SoundFile(this,"5.WAV");
+  Yellow=new LightBulb(6,25,s);Lights[i]=Yellow;
   i++;
   for (LightBulb b : Lights){
     //GPIO.pinMode(b.index,GPIO.OUTPUT);
