@@ -1,4 +1,4 @@
-//import processing.io.*;
+import processing.io.*;
 import processing.sound.*;
 Timer t = new Timer();
 LightBulb[] Lights = new LightBulb[5];
@@ -19,23 +19,23 @@ void setup(){
   simonSaying = true;
   size(700,500);
   int i = 0;
-  SoundFile s = new SoundFile(this,"1.WAV");
+  SoundFile s = new SoundFile(this,"1.wav");
   Red=new LightBulb(4,13,s);Lights[i]=Red;
   i++;
-  s = new SoundFile(this,"2.WAV");
+  s = new SoundFile(this,"2.wav");
   Green=new LightBulb(17,26,s);Lights[i]=Green;
   i++;
-  s = new SoundFile(this,"3.WAV");
+  s = new SoundFile(this,"3.wav");
   Blue=new LightBulb(22,18,s);Lights[i]=Blue;
   i++;
-  s = new SoundFile(this,"4.WAV");
+  s = new SoundFile(this,"4.wav");
   White=new LightBulb(5,23,s);Lights[i]=White;
   i++;
-  s = new SoundFile(this,"5.WAV");
+  s = new SoundFile(this,"5.wav");
   Yellow=new LightBulb(6,25,s);Lights[i]=Yellow;
   i++;
   for (LightBulb b : Lights){
-    //GPIO.pinMode(b.index,GPIO.OUTPUT);
+    GPIO.pinMode(b.index,GPIO.OUTPUT);
   }
   
   
