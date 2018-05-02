@@ -6,18 +6,16 @@ class LightBulb{
     this.index=index;
     this.idx2=idx2;
     on = false;
-    this.file=file;
-    file.cue(29);
+    this.file=file;file.cue(29);
   }
   void On(){
-    if (!on){file.amp(1);file.play();}
+    if (!on){playfile(file);}
     for (LightBulb b : Lights){
       b.Off();
     }
     on=true;
   }
   void Off(){
-    //file.stop();
     on=false;
   }
   void Display(){

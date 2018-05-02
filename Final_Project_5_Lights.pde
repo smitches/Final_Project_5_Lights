@@ -10,6 +10,7 @@ String[] Screens = new String[5];
 String thisScreen; int i=0;
 int idx = 0;
 Boolean firstCall=true;
+SoundFile playing;
 
 
 //TODO: IMPLEMENT HIGH SCORE (10*ROUNDS CORRECT) AND STORE TO CSV
@@ -22,6 +23,7 @@ void setup(){
   SoundFile s = new SoundFile(this,"1.wav");
   Red=new LightBulb(4,13,s);Lights[i]=Red;
   i++;
+  playing =s;
   s = new SoundFile(this,"2.wav");
   Green=new LightBulb(17,26,s);Lights[i]=Green;
   i++;
@@ -105,7 +107,8 @@ void simonAdds(){
   simonSaid.add(Lights[i]);
 }
 void simonSays(){
-  if (simonSaid.size()==0){simonSaid.add(Lights[int(random(5))]);}
+  if (simonSaid.size()==0){ int randint=int(random(5));
+    simonSaid.add(Lights[randint]);playing=Lights[randint].file;}
   if(idx==0&&firstCall){
     t.setPeriod(1000);
     t.now();
@@ -174,4 +177,9 @@ void allOff(){
   for (LightBulb b : Lights){
     b.Off();
   }
+}
+void playfile(SoundFile f){
+  playing.stop();
+  playing=f;
+  playing.play();
 }
