@@ -1,15 +1,15 @@
 class LightBulb{
   int index, idx2;
   boolean on;
-  SoundFile file;
-  LightBulb(int index, int idx2, SoundFile file){
+  //SoundFile file;
+  LightBulb(int index, int idx2 /*soundFile file*/){
     this.index=index;
     this.idx2=idx2;
     on = false;
-    this.file=file;file.cue(29);
+    //this.file=file;file.cue(29);
   }
   void On(){
-    if (!on){playfile(file);}
+    if (!on){/*playfile(file)*/;}
     for (LightBulb b : Lights){
       b.Off();
     }

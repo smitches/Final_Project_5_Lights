@@ -1,5 +1,5 @@
 import processing.io.*;
-import processing.sound.*;
+//import processing.sound.*;
 Timer t = new Timer();
 LightBulb[] Lights = new LightBulb[5];
 LightBulb Red,Green,Blue,White,Yellow;
@@ -7,10 +7,13 @@ ArrayList<LightBulb> simonSaid=new ArrayList<LightBulb>();
 ArrayList<LightBulb> playerSaid=new ArrayList<LightBulb>();
 Boolean simonSaying;
 String[] Screens = new String[5];
-String thisScreen; int i=0;
+String thisScreen; 
+int i=0;
 int idx = 0;
+int score = 0;
 Boolean firstCall=true;
-SoundFile playing;
+String scoretxt = "Score: 0";
+//SoundFile playing;
 
 
 //TODO: IMPLEMENT HIGH SCORE (10*ROUNDS CORRECT) AND STORE TO CSV
@@ -20,21 +23,22 @@ void setup(){
   simonSaying = true;
   size(700,500);
   int i = 0;
-  SoundFile s = new SoundFile(this,"1.wav");
-  Red=new LightBulb(4,13,s);Lights[i]=Red;
+  //remember to add in the s when initializing lightbulbs
+  //SoundFile s = new SoundFile(this,"1.wav");
+  Red=new LightBulb(4,13);Lights[i]=Red;
   i++;
-  playing =s;
-  s = new SoundFile(this,"2.wav");
-  Green=new LightBulb(17,26,s);Lights[i]=Green;
+  //playing =s;
+ // s = new SoundFile(this,"2.wav");
+  Green=new LightBulb(17,26);Lights[i]=Green;
   i++;
-  s = new SoundFile(this,"3.wav");
-  Blue=new LightBulb(22,18,s);Lights[i]=Blue;
+//  s = new SoundFile(this,"3.wav");
+  Blue=new LightBulb(22,18);Lights[i]=Blue;
   i++;
-  s = new SoundFile(this,"4.wav");
-  White=new LightBulb(5,23,s);Lights[i]=White;
+ // s = new SoundFile(this,"4.wav");
+  White=new LightBulb(5,23);Lights[i]=White;
   i++;
-  s = new SoundFile(this,"5.wav");
-  Yellow=new LightBulb(6,25,s);Lights[i]=Yellow;
+//  s = new SoundFile(this,"5.wav");
+  Yellow=new LightBulb(6,25);Lights[i]=Yellow;
   i++;
   for (LightBulb b : Lights){
     GPIO.pinMode(b.index,GPIO.OUTPUT);
@@ -81,6 +85,9 @@ void displayPlayScreen(){
   noStroke();
   fill(0,255,255);
   rect(0,0,500,500);
+  fill(0);
+  textSize(20);
+  text(scoretxt, 10,25);
   if (simonSaying) {
     simonSays();
   }else {
@@ -107,8 +114,11 @@ void simonAdds(){
   simonSaid.add(Lights[i]);
 }
 void simonSays(){
-  if (simonSaid.size()==0){ int randint=int(random(5));
-    simonSaid.add(Lights[randint]);playing=Lights[randint].file;}
+  if (simonSaid.size()==0){ 
+    int randint=int(random(5));
+    simonSaid.add(Lights[randint]);
+  //playing=Lights[randint].file;
+  }
   if(idx==0&&firstCall){
     t.setPeriod(1000);
     t.now();
@@ -131,17 +141,28 @@ void simonSays(){
 void playerSays(){
   if(playerSaid.size()>0){
     playerSaid.get(playerSaid.size()-1).On();
-    if (t.elapsed()<50){allOff();}
-    if(!firstCall){firstCall=true;t.now();}
+    if (t.elapsed()<50)
+      {allOff();}
+    if(!firstCall)
+      {firstCall=true;
+       t.now();}
   }
-  if(playerSaid.size()==simonSaid.size()-1&&t.next()){allOff();if(!compare()){displayLoseScreen();}simonSaying=true;}
+  if(playerSaid.size()==simonSaid.size()-1&&t.next())
+    {allOff();
+     if(!compare())
+       {thisScreen=Screens[4];}
+     else {
+     updateScore(playerSaid.size());
+     simonSaying=true;}
+    }
   
 }
 
 Boolean compare(){
   Boolean returnvalue = true;
   for (int j=0;j<playerSaid.size();j++){
-    if (playerSaid.get(j)!=simonSaid.get(j)){returnvalue=false;}
+    if (playerSaid.get(j)!=simonSaid.get(j))
+      {returnvalue=false;}
   }
   return (returnvalue);
 }
@@ -178,8 +199,15 @@ void allOff(){
     b.Off();
   }
 }
-void playfile(SoundFile f){
+
+/*void playfile(SoundFile f){
   playing.stop();
   playing=f;
   playing.play();
+}*/
+
+void updateScore(int n){
+  score = 10 * n;
+  scoretxt = "Score: " + str(score);
 }
+  
