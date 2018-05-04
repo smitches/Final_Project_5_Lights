@@ -1,6 +1,7 @@
 import processing.io.*;
 //import processing.sound.*;
 Timer t = new Timer();
+Table highScores; 
 LightBulb[] Lights = new LightBulb[5];
 LightBulb Red,Green,Blue,White,Yellow;
 ArrayList<LightBulb> simonSaid=new ArrayList<LightBulb>();
@@ -12,11 +13,15 @@ int i=0;
 int idx = 0;
 int score = 0;
 Boolean firstCall=true;
+Boolean written = false;
 String scoretxt = "Score: 0";
+String name = "";
+
 //SoundFile playing;
 
 
-//TODO: IMPLEMENT HIGH SCORE (10*ROUNDS CORRECT) AND STORE TO CSV
+//TODO: RESET = > Remember to reset the varibles;
+//TODO: Input name when the player dies and store string name as the input
 //TODO: ALL GUI SCREENS. LOOK AT THE FUNCTIONS BELOW DRAW
 
 void setup(){ 
@@ -62,6 +67,8 @@ void draw(){
     {displayGetNameScreen();}  
   else if(thisScreen==Screens[3])
     {displayHighScoreScreen();}
+  else if(thisScreen==Screens[4])
+    {displayLoseScreen(); }
   
   
   for(LightBulb b : Lights){b.Display();}
@@ -97,6 +104,7 @@ void displayPlayScreen(){
 
 void displayLoseScreen(){
   background(0);
+  writeCsv();
 }
 
 void displayGetNameScreen(){
@@ -210,4 +218,16 @@ void updateScore(int n){
   score = 10 * n;
   scoretxt = "Score: " + str(score);
 }
+
+void writeCsv(){
+  if (written == false){
+  highScores = loadTable("Scores.csv", "header");
+  TableRow newRow = highScores.addRow();
+  newRow.setString("Name", name);
+  newRow.setInt("Score", score);
+  saveTable(highScores, "Scores.csv");
+  written = true;
+  }
+}
+  
   
