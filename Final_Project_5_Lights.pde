@@ -16,6 +16,7 @@ Boolean firstCall=true;
 Boolean written = false;
 String scoretxt = "Score: 0";
 String name = "";
+ArrayList<String> scoreList = new ArrayList<String>();
 
 //SoundFile playing;
 
@@ -104,7 +105,11 @@ void displayPlayScreen(){
 
 void displayLoseScreen(){
   background(0);
+  if (written == false){
   writeCsv();
+  updateScoresLists();
+  written = true;
+  }
 }
 
 void displayGetNameScreen(){
@@ -177,7 +182,6 @@ Boolean compare(){
 
 void mouseClicked(){
   thisScreen=Screens[1];
-  
   Lights[i%Lights.length].On();
   i++;
 }
@@ -220,14 +224,27 @@ void updateScore(int n){
 }
 
 void writeCsv(){
-  if (written == false){
   highScores = loadTable("Scores.csv", "header");
   TableRow newRow = highScores.addRow();
   newRow.setString("Name", name);
   newRow.setInt("Score", score);
   saveTable(highScores, "Scores.csv");
-  written = true;
+}
+
+void updateScoresLists(){
+  highScores = loadTable("Scores.csv", "header");
+  highScores.setColumnType("Score", Table.INT);
+  highScores.sortReverse("Score");
+  int rows = highScores.getRowCount();
+  if (rows > 10){
+    rows = 10;
+  }
+  for (int r = 0; r < rows; r++) {
+  TableRow row = highScores.getRow(r);
+  String oneScore = "";
+  oneScore += row.getString("Name");
+  oneScore += " : ";
+  oneScore += row.getString("Score");
+  scoreList.add(oneScore);
   }
 }
-  
-  
