@@ -17,6 +17,15 @@ Boolean written = false;
 String scoretxt = "Score: 0";
 String name = "";
 ArrayList<String> scoreList = new ArrayList<String>();
+color green = #2EAF04;
+color red = #F01317;
+color white = #FFFFFF;
+color blue = #1D21ED;
+color yellow = #FFF931;
+color[] array = {red,green,blue,white,yellow};
+PFont font;
+int x;
+PImage img;
 
 //SoundFile playing;
 
@@ -27,6 +36,8 @@ ArrayList<String> scoreList = new ArrayList<String>();
 
 void setup(){ 
   simonSaying = true;
+  img = loadImage("psych.jpg");
+  font = loadFont("GillSans-UltraBold-48.vlw");
   size(700,500);
   int i = 0;
   //remember to add in the s when initializing lightbulbs
@@ -53,46 +64,94 @@ void setup(){
   
   thisScreen=Screens[0]="MainMenuScreen";
   Screens[1]="PlayScreen";
-  Screens[2]="GetNameScreen";
+  Screens[2]="Instructions";
   Screens[3]="DisplayHighScoreScreen";
   Screens[4]="DisplayLoseScreen";
 }
 
 void draw(){
-  
   if (thisScreen==Screens[0])
     {displayMainMenu();}
   else if(thisScreen==Screens[1])
-    {displayPlayScreen();}
+    {displayPlayScreen();
+    for(LightBulb b : Lights){b.Display();}
+    for (int i=0; i<Lights.length;i++){
+    if(Lights[i].on && i == 0)
+       {fill(red);}
+    else if (Lights[i].on && i == 1){
+       fill(green);}
+    else if (Lights[i].on && i == 2){
+       fill(blue);}
+    else if (Lights[i].on && i == 3){
+       fill(white);}
+    else if (Lights[i].on && i == 4){
+       fill(yellow);}
+    else{fill(0);}
+    ellipse(350,i*30+140,20,20);
+  }}//END ONLY FOR PC}
   else if(thisScreen==Screens[2])
-    {displayGetNameScreen();}  
+    {displayInstructions();}  
   else if(thisScreen==Screens[3])
     {displayHighScoreScreen();}
   else if(thisScreen==Screens[4])
     {displayLoseScreen(); }
   
-  
-  for(LightBulb b : Lights){b.Display();}
-  
-  //ONLY FOR PC
-  for (int i=0; i<Lights.length;i++){
-    if(Lights[i].on){fill(255);}
-    else{fill(0);}
-    ellipse(600,i*30+20,20,20);
-  }
-  //END ONLY FOR PC
-  
 }
 
 void displayMainMenu(){
-  noStroke();
-  fill(0,255,0);
-  rect(0,0,500,500);
+  for (int x = 0; x <= width;x+= 15){
+    for (int y = 0;y <= height;y+= 15){
+      fill(#FFFFFF);
+      fill(random(255),random(255),random(255));
+      ellipse(x,y,11,11);
+    }
+  }
+  //titleButton
+  fill(0);
+  rect(100,50,500,100);
+  fill(255);
+  textFont(font,80);
+  text("5 - Lights",112,125);
+  //play
+  fill(0);
+  rect(275,200,125,50);
+  fill(255);
+  textFont(font,30);
+  text("Play",300,235);
+  //Instructions
+  fill(0);
+  rect(220,290,250,50);
+  fill(255);
+  textFont(font,30);
+  text("Instructions",230,325);
+  //High Scores
+  fill(0);
+  rect(220,380,250,50);
+  fill(255);
+  textFont(font,30);
+  text("High Scores",235,415);
+ // noStroke();
+ // fill(0,255,0);
+ // rect(0,0,500,500);
 }
 void displayPlayScreen(){
+  background(255);
+  img.resize(700,500);
+  image(img,0,0);
+  strokeWeight(10);
+  stroke(0);
+  fill(#C4C4C0);
+  rect(300,100,100,200);
   noStroke();
-  fill(0,255,255);
-  rect(0,0,500,500);
+  strokeWeight(5);
+  stroke(0);
+  fill(#C4C4C0);
+  rect(0,0,140,40);
+  fill(#C4C4C0);
+  rect(200,350,300,100);
+  textSize(20);
+  fill(0);
+  text("Simon is talking...",230,400);
   fill(0);
   textSize(20);
   text(scoretxt, 10,25);
@@ -101,10 +160,17 @@ void displayPlayScreen(){
   }else {
     playerSays();
   }
+  noStroke();
 }
 
 void displayLoseScreen(){
   background(0);
+  image(img,0,0);
+  fill(255);
+  rect(245,200,200,100);
+  fill(0);
+  textSize(20);
+  text("YOU LOSE",280,250);
   if (written == false){
   writeCsv();
   updateScoresLists();
@@ -112,7 +178,7 @@ void displayLoseScreen(){
   }
 }
 
-void displayGetNameScreen(){
+void displayInstructions(){
   noStroke();
   fill(255,255,0);
   rect(0,0,500,500);
@@ -181,9 +247,15 @@ Boolean compare(){
 }
 
 void mouseClicked(){
+  if ((mouseX > 275 && mouseX < 400) && (mouseY > 200 && mouseY < 250)){
   thisScreen=Screens[1];
   Lights[i%Lights.length].On();
-  i++;
+  i++;}
+  if((mouseX > 220 && mouseX < 470) && (mouseY > 290 && mouseY < 340)){
+    thisScreen = Screens[2];}
+  if((mouseX > 220 && mouseX < 470) && (mouseY > 380 && mouseY < 430)){
+    thisScreen = Screens[3];}
+    
 }
 
 void keyReleased(){
