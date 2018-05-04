@@ -155,18 +155,24 @@ void displayPlayScreen(){
   stroke(0);
   fill(#C4C4C0);
   rect(0,0,140,40);
-  fill(#C4C4C0);
-  rect(200,350,300,100);
-  textSize(20);
-  fill(0);
-  text("Simon is talking...",230,400);
+  
   fill(0);
   textSize(20);
   text(scoretxt, 10,25);
   if (simonSaying) {
     simonSays();
+  fill(#DE0B27);
+  rect(200,350,300,100);
+  textSize(20);
+  fill(0);
+  text("Simon is talking...",230,400);
   }else {
     playerSays();
+    fill(#62DE0B);
+    rect(200,350,300,100);
+    textSize(20);
+    fill(0);
+    text("Your Turn...",230,400);
   }
   noStroke();
 }
@@ -182,16 +188,15 @@ void displayLoseScreen(){
   text("YOU LOSE",280,150);
   fill(255);
   stroke(12);
-  rect(245,275,200,100);
+  rect(245,275,225,100);
   fill(0);
   textSize(30);
   text("Enter Name: ", 260,300);
-  text(name,260,320);
-  if (written == false){
-  writeCsv();
+  text(name,260,330);
+  //if (written == false){
   updateScoresLists();
-  written = true;
-  }
+  //written = true;
+  //}
 }
 
 void displayInstructions(){
@@ -203,8 +208,7 @@ void displayInstructions(){
    text("Your job is to match that sequence whenever its your turn by pressing the right key!!", 10, 60); 
    text("The squares below indicate which key pad corresponds to which color!!", 10, 80);
    text("Good luck and make sure you pay attention to what Simon is saying!!", 10, 100);
-buttons();
- 
+
   
  buttons();
  
@@ -243,10 +247,21 @@ void buttons(){
 
 }
 void displayHighScoreScreen(){
-  noStroke();
-  fill(255,0,255);
-  rect(0,0,500,500);
+  //noStroke();
+  //fill(255,0,255);
+  //rect(0,0,500,500);
+  background(255,0,255);
+  int ypos = 250;
+  int xpos =350;
+  textSize(20);
+  for (String score : scoreList){
+    text(score, xpos, ypos);
+    ypos += 20;
+    
+  
+  }
 }
+
 void simonAdds(){
   int i = int(random(5));
   simonSaid.add(Lights[i]);
@@ -306,14 +321,14 @@ Boolean compare(){
 }
 
 void mouseClicked(){
-  if ((mouseX > 275 && mouseX < 400) && (mouseY > 200 && mouseY < 250)){
+  if ((thisScreen == Screens[0] && mouseX > 275 && mouseX < 400) && (mouseY > 200 && mouseY < 250)){
   thisScreen=Screens[1];
   //Lights[i%Lights.length].On();
   //i++;
   }
-  if((mouseX > 220 && mouseX < 470) && (mouseY > 290 && mouseY < 340)){
+  if((thisScreen == Screens[0] && mouseX > 220 && mouseX < 470) && (mouseY > 290 && mouseY < 340)){
     thisScreen = Screens[2];}
-  if((mouseX > 220 && mouseX < 470) && (mouseY > 380 && mouseY < 430)){
+  if((thisScreen == Screens[0] && mouseX > 220 && mouseX < 470) && (mouseY > 380 && mouseY < 430)){
     thisScreen = Screens[3];}
     
 }
@@ -365,6 +380,7 @@ void writeCsv(){
 }
 
 void updateScoresLists(){
+  scoreList  = new ArrayList<String>();
   highScores = loadTable("Scores.csv", "header");
   highScores.setColumnType("Score", Table.INT);
   highScores.sortReverse("Score");
