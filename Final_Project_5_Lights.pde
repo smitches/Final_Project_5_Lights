@@ -27,10 +27,6 @@ PFont font;
 int x;
 PImage img;
 
-String[] instruct = new String[5];
-int idxl=0, jdx=0, ydx = 20;
-float xdx = 10;
-String message;
 
 Button home;
 
@@ -196,37 +192,17 @@ void displayLoseScreen(){
 }
 
 void displayInstructions(){
-  background(255);
-  instruct[0] = "Welcome to the game 5 lights which is simlar to Simon Says!!";
-  instruct[1] = "The game will consist of Simon displaying 5 different colored lights in a sequence!!";
-  instruct[2] = "Your job is to match that sequence whenever its your turn by pressing the right key!!"; 
-  instruct[3] = "The squares below indicate which key pad corresponds to which color!!";
-  instruct[4] = "Good luck and make sure you pay attention to what Simon is saying!!";
-
-  textSize(16);
-  pushMatrix();
-  translate(0, 20);
-  fill(0);
- for (int count = 0; count < instruct.length; count ++){
-  if (idxl<instruct.length) {
-    message = instruct[idxl];
-  }
+  background(0);
+   textSize(18);
+   
+   text("Welcome to the game 5 lights which is simlar to Simon Says!!", 10 ,20);
+   text("The game will consist of Simon displaying 5 different colored lights in a sequence!!", 10, 40);
+   text("Your job is to match that sequence whenever its your turn by pressing the right key!!", 10, 60); 
+   text("The squares below indicate which key pad corresponds to which color!!", 10, 80);
+   text("Good luck and make sure you pay attention to what Simon is saying!!", 10, 100);
+buttons();
+ 
   
-  else{
-    message = "";}
-  if (jdx < message.length()) {
-    text(message, xdx, ydx*idxl+10);
-    xdx += textWidth(message.charAt(jdx)); 
-    jdx++;
-    
-  }
-  else { 
-    jdx=0;
-    idxl++;
-    xdx = 10;
- }
- }
- popMatrix();
  buttons();
  
  

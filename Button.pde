@@ -32,9 +32,6 @@ name = "";
 scoreList = new ArrayList<String>();
 
 
-instruct = new String[5];
-idxl=0; jdx=0; ydx = 20;
-xdx = 10;
 
 
         setup();
