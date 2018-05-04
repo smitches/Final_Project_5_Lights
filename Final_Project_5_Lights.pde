@@ -1,5 +1,5 @@
 //import processing.io.*;
-//import processing.sound.*;
+import processing.sound.*;
 Timer t = new Timer();
 Table highScores; 
 LightBulb[] Lights = new LightBulb[5];
@@ -335,6 +335,7 @@ void mouseClicked(){
 }
 void keyPressed(){allOff();}
 void keyReleased(){
+  getName();
   if (!simonSaying){
     t.now();
     if(key=='1'){
