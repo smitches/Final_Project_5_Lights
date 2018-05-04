@@ -181,8 +181,13 @@ void displayLoseScreen(){
   fill(255);
   rect(245,200,200,100);
   fill(0);
-  textSize(20);
+  textSize(30);
   text("YOU LOSE",280,250);
+  fill(255);
+  rect(245,375,200,100);
+  fill(0);
+  textSize(30);
+  text("Enter Name: " + name, 280,450);
   if (written == false){
   writeCsv();
   updateScoresLists();
