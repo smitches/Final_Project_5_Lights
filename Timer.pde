@@ -3,7 +3,9 @@ class Timer{
   float period;
   Timer(){
   }
-  void now(){startTime=millis();}
+  void now(){
+  startTime=millis();
+}
   float elapsed(){
     return (millis()-startTime);
   }

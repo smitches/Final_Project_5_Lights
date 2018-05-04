@@ -27,6 +27,11 @@ PFont font;
 int x;
 PImage img;
 
+String[] instruct = new String[5];
+int idxl=0, jdx=0, ydx = 20;
+float xdx = 10;
+String message;
+
 //SoundFile playing;
 
 
@@ -35,6 +40,7 @@ PImage img;
 //TODO: ALL GUI SCREENS. LOOK AT THE FUNCTIONS BELOW DRAW
 
 void setup(){ 
+  frameRate(60);
   simonSaying = true;
   img = loadImage("psych.jpg");
   font = loadFont("GillSans-UltraBold-48.vlw");
@@ -70,6 +76,7 @@ void setup(){
 }
 
 void draw(){
+  frameRate(60);
   if (thisScreen==Screens[0])
     {displayMainMenu();}
   else if(thisScreen==Screens[1])
@@ -179,9 +186,73 @@ void displayLoseScreen(){
 }
 
 void displayInstructions(){
-  noStroke();
-  fill(255,255,0);
-  rect(0,0,500,500);
+  frameRate(40);
+  background(255);
+  instruct[0] = "Welcome to the game 5 lights which is simlar to Simon Says!!";
+  instruct[1] = "The game will consist of Simon displaying 5 different colored lights in a sequence!!";
+  instruct[2] = "Your job is to match that sequence whenever its your turn by pressing the right key!!"; 
+  instruct[3] = "The squares below indicate which key pad corresponds to which color!!";
+  instruct[4] = "Good luck and make sure you pay attention to what Simon is saying!!";
+
+  textSize(16);
+  pushMatrix();
+  translate(0, 20);
+  fill(0);
+ for (int count = 0; count < instruct.length; count ++){
+  if (idxl<instruct.length) {
+    message = instruct[idxl];
+  }
+  
+  else{
+    message = "";}
+  if (jdx < message.length()) {
+    text(message.charAt(jdx), xdx, ydx*idxl+10);
+    xdx += textWidth(message.charAt(jdx)); 
+    jdx++;
+    
+  }
+  else { 
+    jdx=0;
+    idxl++;
+    xdx = 10;
+ }
+ }
+ popMatrix();
+ buttons();
+ 
+ 
+}
+
+void buttons(){
+
+  textSize(30);
+  stroke(255);
+  strokeWeight(3);
+  
+  fill(#FA0808);
+  rect(200, 200, 70,70);
+ 
+  
+  fill(#08FA19);
+  rect(290, 200,70,70);
+  
+  fill(#081DFA);
+  rect(380, 200, 70, 70);
+
+  
+  fill(255, 255, 255);
+  rect(240,300, 70, 70);
+  
+  fill(#FFF305);
+  rect(340, 300, 70, 70);
+ 
+  fill(0);
+  text("1",228, 245);
+  text("2",318, 245);
+  text("3",406, 245);
+  text("4",268, 340);
+  text("5",368, 340);
+
 }
 void displayHighScoreScreen(){
   noStroke();
