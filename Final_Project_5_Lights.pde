@@ -1,5 +1,5 @@
 //import processing.io.*;
-import processing.sound.*;
+//import processing.sound.*;
 Timer t = new Timer();
 Table highScores; 
 LightBulb[] Lights = new LightBulb[5];
