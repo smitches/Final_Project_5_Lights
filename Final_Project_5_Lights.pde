@@ -1,4 +1,4 @@
-import processing.io.*;
+//import processing.io.*;
 import processing.sound.*;
 Timer t = new Timer();
 Table highScores; 
@@ -67,7 +67,7 @@ void setup(){
   Yellow=new LightBulb(6,25,s);Lights[i]=Yellow;
   i++;
   for (LightBulb b : Lights){
-    GPIO.pinMode(b.index,GPIO.OUTPUT);
+    //GPIO.pinMode(b.index,GPIO.OUTPUT);
   }
   
   
@@ -191,7 +191,6 @@ void displayLoseScreen(){
 }
 
 void displayInstructions(){
-  frameRate(40);
   background(255);
   instruct[0] = "Welcome to the game 5 lights which is simlar to Simon Says!!";
   instruct[1] = "The game will consist of Simon displaying 5 different colored lights in a sequence!!";
@@ -211,7 +210,7 @@ void displayInstructions(){
   else{
     message = "";}
   if (jdx < message.length()) {
-    text(message.charAt(jdx), xdx, ydx*idxl+10);
+    text(message, xdx, ydx*idxl+10);
     xdx += textWidth(message.charAt(jdx)); 
     jdx++;
     
