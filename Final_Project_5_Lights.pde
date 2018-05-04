@@ -1,5 +1,5 @@
 import processing.io.*;
-//import processing.sound.*;
+import processing.sound.*;
 Timer t = new Timer();
 Table highScores; 
 LightBulb[] Lights = new LightBulb[5];
@@ -32,7 +32,9 @@ int idxl=0, jdx=0, ydx = 20;
 float xdx = 10;
 String message;
 
-//SoundFile playing;
+Button home;
+
+SoundFile playing;
 
 
 //TODO: RESET = > Remember to reset the varibles;
@@ -43,25 +45,26 @@ void setup(){
   frameRate(60);
   simonSaying = true;
   img = loadImage("psych.jpg");
-  font = loadFont("GillSans-UltraBold-48.vlw");
+  font = createFont("GILLUBCD.TTF",48);//loadFont("GillSans-UltraBold-48.vlw");
   size(700,500);
+  home = new Button(10,height-70,120,50,"Main Menu");
   int i = 0;
   //remember to add in the s when initializing lightbulbs
-  //SoundFile s = new SoundFile(this,"1.wav");
-  Red=new LightBulb(4,13);Lights[i]=Red;
+  SoundFile s = new SoundFile(this,"1.wav");
+  Red=new LightBulb(4,13,s);Lights[i]=Red;
   i++;
-  //playing =s;
- // s = new SoundFile(this,"2.wav");
-  Green=new LightBulb(17,26);Lights[i]=Green;
+  playing =s;
+  s = new SoundFile(this,"2.wav");
+  Green=new LightBulb(17,26,s);Lights[i]=Green;
   i++;
-//  s = new SoundFile(this,"3.wav");
-  Blue=new LightBulb(22,18);Lights[i]=Blue;
+  s = new SoundFile(this,"3.wav");
+  Blue=new LightBulb(22,18,s);Lights[i]=Blue;
   i++;
- // s = new SoundFile(this,"4.wav");
-  White=new LightBulb(5,23);Lights[i]=White;
+  s = new SoundFile(this,"4.wav");
+  White=new LightBulb(5,23,s);Lights[i]=White;
   i++;
-//  s = new SoundFile(this,"5.wav");
-  Yellow=new LightBulb(6,25);Lights[i]=Yellow;
+  s = new SoundFile(this,"5.wav");
+  Yellow=new LightBulb(6,25,s);Lights[i]=Yellow;
   i++;
   for (LightBulb b : Lights){
     GPIO.pinMode(b.index,GPIO.OUTPUT);
@@ -102,10 +105,12 @@ void draw(){
     {displayHighScoreScreen();}
   else if(thisScreen==Screens[4])
     {displayLoseScreen(); }
+  if (thisScreen!=Screens[0]){home.Display();home.isOver();}
   
 }
 
 void displayMainMenu(){
+  background(200);
   for (int x = 0; x <= width;x+= 15){
     for (int y = 0;y <= height;y+= 15){
       fill(#FFFFFF);
@@ -267,7 +272,7 @@ void simonSays(){
   if (simonSaid.size()==0){ 
     int randint=int(random(5));
     simonSaid.add(Lights[randint]);
-  //playing=Lights[randint].file;
+    playing=Lights[randint].file;
   }
   if(idx==0&&firstCall){
     t.setPeriod(1000);
@@ -320,15 +325,16 @@ Boolean compare(){
 void mouseClicked(){
   if ((mouseX > 275 && mouseX < 400) && (mouseY > 200 && mouseY < 250)){
   thisScreen=Screens[1];
-  Lights[i%Lights.length].On();
-  i++;}
+  //Lights[i%Lights.length].On();
+  //i++;
+  }
   if((mouseX > 220 && mouseX < 470) && (mouseY > 290 && mouseY < 340)){
     thisScreen = Screens[2];}
   if((mouseX > 220 && mouseX < 470) && (mouseY > 380 && mouseY < 430)){
     thisScreen = Screens[3];}
     
 }
-
+void keyPressed(){allOff();}
 void keyReleased(){
   if (!simonSaying){
     t.now();
@@ -355,11 +361,11 @@ void allOff(){
   }
 }
 
-/*void playfile(SoundFile f){
+void playfile(SoundFile f){
   playing.stop();
   playing=f;
   playing.play();
-}*/
+}
 
 void updateScore(int n){
   score = 10 * n;
