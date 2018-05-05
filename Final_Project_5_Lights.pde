@@ -17,6 +17,7 @@ Boolean written = false;
 String scoretxt = "Score: 0";
 String name = "";
 ArrayList<String> scoreList = new ArrayList<String>();
+
 color green = #2EAF04;
 color red = #F01317;
 color white = #FFFFFF;
@@ -193,10 +194,11 @@ void displayLoseScreen(){
   textSize(30);
   text("Enter Name: ", 260,300);
   text(name,260,330);
-  //if (written == false){
+  if (written == false){
   updateScoresLists();
-  //written = true;
-  //}
+  written = true;
+  }
+  updateScoresLists();
 }
 
 void displayInstructions(){
@@ -211,7 +213,6 @@ void displayInstructions(){
 
   
  buttons();
- 
  
 }
 
@@ -246,21 +247,69 @@ void buttons(){
   text("5",368, 340);
 
 }
+
 void displayHighScoreScreen(){
-  //noStroke();
-  //fill(255,0,255);
-  //rect(0,0,500,500);
+  updateScoresLists();
   background(255,0,255);
+ 
   int ypos = 250;
-  int xpos =350;
+  int xpos =250;
+  textSize(40);
+  text("Highscores", 230, 200);
   textSize(20);
-  for (String score : scoreList){
-    text(score, xpos, ypos);
+  fill(0);
+
+  if (hscorename.size() >= 6){
+  for(int i =0; i < 6; i++){
+    String nm = hscorename.get(hscorename.size() - 1 - i);
+    String sc = hscore.get(hscorename.size() -1 - i);
+    String onescore = nm + "  :  " + sc;
+    text(onescore,xpos,ypos);
     ypos += 20;
-    
-  
   }
+  } else   if (hscorename.size() <= 5){
+  for(int i =0; i < 5; i++){
+    String nm = hscorename.get(i);
+    String sc = hscore.get(i);
+    String onescore = nm + "  :  " + sc;
+    text(onescore,xpos,ypos);
+    ypos += 20;
+  }
+  }else   if (hscorename.size() <= 4){
+  for(int i =0; i < 4; i++){
+    String nm = hscorename.get(i);
+    String sc = hscore.get(i);
+    String onescore = nm + "  :  " + sc;
+    text(onescore,xpos,ypos);
+    ypos += 20;
+  }
+  }else   if (hscorename.size() <= 3){
+  for(int i =0; i < 3; i++){
+    String nm = hscorename.get(i);
+    String sc = hscore.get(i);
+    String onescore = nm + "  :  " + sc;
+    text(onescore,xpos,ypos);
+    ypos += 20;
+  }
+  }else   if (hscorename.size() <= 2){
+  for(int i =0; i < 2; i++){
+    String nm = hscorename.get(i);
+    String sc = hscore.get(i);
+    String onescore = nm + "  :  " + sc;
+    text(onescore,xpos,ypos);
+    ypos += 20;
+  }
+  } else   if (hscorename.size() <= 1){
+  for(int i =0; i < 1; i++){
+    String nm = hscorename.get(i);
+    String sc = hscore.get(i);
+    String onescore = nm + "  :  " + sc;
+    text(onescore,xpos,ypos);
+    ypos += 20;
+  }
+ }
 }
+ 
 
 void simonAdds(){
   int i = int(random(5));
@@ -379,21 +428,25 @@ void writeCsv(){
   saveTable(highScores, "Scores.csv");
 }
 
+ArrayList<String> hscorename = new ArrayList<String>();
+ArrayList<String> hscore = new ArrayList<String>();
+
 void updateScoresLists(){
-  scoreList  = new ArrayList<String>();
   highScores = loadTable("Scores.csv", "header");
   highScores.setColumnType("Score", Table.INT);
-  highScores.sortReverse("Score");
+  highScores.sort("Score");
+
   int rows = highScores.getRowCount();
   if (rows > 10){
     rows = 10;
   }
+  
   for (int r = 0; r < rows; r++) {
   TableRow row = highScores.getRow(r);
-  String oneScore = "";
-  oneScore += row.getString("Name");
-  oneScore += " : ";
-  oneScore += row.getString("Score");
-  scoreList.add(oneScore);
+  String name = row.getString("Name");
+  String score = row.getString("Score");
+
+  hscorename.add(name);
+  hscore.add(score);
   }
 }
